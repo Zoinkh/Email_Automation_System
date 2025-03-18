@@ -1,13 +1,14 @@
 import sys
-from PyQt5 import QtWidgets, uic
+import os
 
-class MainWindow(QtWidgets.QMainWindow):
-    def __init__(self):
-        super(MainWindow, self).__init__()
-        uic.loadUi('UI/Menu.ui', self)  # Load the UI file
+# Get the absolute path to the 'other_file' directory
+lib = os.path.join(os.path.dirname(__file__), "Lib")
 
-if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec_())
+# Add the 'other_file' directory to sys.path
+sys.path.append(lib)
+
+# Now you can import from other_file.py
+import Lib
+
+# Use the functions
+Lib.menu()
