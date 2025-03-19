@@ -50,27 +50,6 @@ def Get_Accounts(file_path):
         return []
 
 
-
-def Create_Session(file_name, data):
-    """
-    Create a CSV file from the given data.
-    
-    :param file_name: Name of the CSV file to create (string)
-    :param data: List of dictionaries containing the data to write
-    """
-    if not data:
-        raise ValueError("Data cannot be empty")
-    
-    # Extract field names from the keys of the first dictionary
-    field_names = data[0].keys()
-    
-    with open(file_name, mode='a', newline='', encoding='utf-8') as file:
-        writer = csv.DictWriter(file, fieldnames=field_names)
-        writer.writeheader()
-        writer.writerows(data)
-    print(f"CSV file '{file_name}' created successfully.")
-
-
 def Print_Logs(file_path):
     """Prints the contents of a .txt file given its path."""
     try:
@@ -115,3 +94,58 @@ def Open_Editor(fileName):
     except FileNotFoundError:
         print("Error: Could not open file. Make sure the editor is installed.")
 
+
+
+
+def Save_Credentials(account, password, filepath):
+    """
+    Saves account and password credentials to a CSV file.
+
+    Args:
+        account: The account name.
+        password: The password.
+        filepath: The path to the CSV file (default: 'settings.csv').
+    """
+    fieldnames = ['account', 'password']
+
+    file_exists = os.path.isfile(filepath)
+
+    try:
+        with open(filepath, 'a', newline='') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+            if not file_exists:
+                writer.writeheader()
+
+            writer.writerow({'account': account, 'password': password})
+    except IOError as e:
+        print(f"Error writing to {filepath}: {e}")
+
+
+
+def Create_Session(filename, message, emails):
+    """
+    Creates a CSV file with message and email addresses.
+
+    Args:
+        filename (str): The name of the CSV file to create.
+        message (str): The message to include in the CSV.
+        emails (list): A list of email addresses.
+    """
+    fieldnames = ['message']
+    for i, email in enumerate(emails):
+        fieldnames.append(f'email{i+1}')
+
+    data = {'message': message}
+    for i, email in enumerate(emails):
+        data[f'email{i+1}'] = email
+
+    try:
+        with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerow(data)
+
+        print(f"CSV file '{filename}' created successfully.")
+    except Exception as e:
+        print(f"An error occurred: {e}")

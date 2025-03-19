@@ -29,24 +29,25 @@ def Menu():
         logs.Logs(f'{user_Input}_Status;Logged-in-Email={currentAccount}_Pending={scheduleEmail}')#log status : form json_ choices : user_iput
         if user_Input == 1:
             logs.Logs(f'User-Choosed=1.-New-Session')
-            user_Input = ''
-            user_Input = input(print('\tEnter New Session Name ( 0 to return): '))
-            logs.Logs(f'User-Choosed_1.-New-Session_New-Session-Name={user_Input}')
+            session_Name = ''
+            session_Name = input(print('\tEnter New Session Name ( 0 to return): '))
+            logs.Logs(f'User-Choosed_1.-New-Session_New-Session-Name={session_Name}')
             if user_Input == 0:
-                logs.Logs(f'User-Choosed_1.-New-Session_New-Session-Name={user_Input}_Back-to-Menu')
+                logs.Logs(f'User-Choosed_1.-New-Session_New-Session-Name={session_Name}_Back-to-Menu')
                 return
-            else :
-                user_Input = ''
-                while True: #loop enter email and save to Data/Save/fileName.csv
-                    user_Input = ''
-                    user_Input = input(print('\tEnter Receiver Email ( 0 to return | \'save\' to save): '))
-                    logs.Logs(f'User-Choosed_1.-New-Session_Receiver-Email={user_Input}')
-                    if user_Input == 0:
-                        logs.Logs(f'User-Choosed_1.-New-Session_Receiver-Email={user_Input}_Back-to-Menu')
-                        return
-                    elif user_Input == 'save':
-                        #create file in Data/Save/fileName.csv
-                        return
+            message = ''
+            message = input(print('\tEnter New Session Name ( 0 to return): '))
+            emial_Input = []
+            while True:
+                user_input = input(print('\tEnter Receiver Email (\'save\' to save): '))
+                logs.Logs(f'User-Choosed_1.-New-Session_Receiver-Email={user_Input}')
+                if user_input.lower() == 'save':
+                    break
+                emial_Input.append(user_input)
+                file_Manipulation.Create_Session(saved_Session_Path+session_Name,message,emial_Input)
+            if user_Input == 0:
+                logs.Logs(f'User-Choosed_1.-New-Session_Receiver-Email={user_Input}_Back-to-Menu')
+                return
                 
         elif user_Input == 2:
             logs.Logs(f'User-Choosed=2.-Saved-Session')
@@ -68,12 +69,13 @@ def Menu():
                 #promte to for set time and and edit
                 user_Choice = ''
                 user_Choice = input(print('\tEnter Choice : '))
-                #if user_Choice == 1:
-                    #loop through file length and send out email
-                #elif user_Choice == 2:
-                    #delete file
-                #elif user_Choice == 3:
-                    #file_Manipulation.Open_Editor(user_Input)
+                if user_Choice == 1:
+                    # loop through file length and send out email
+                    for int i in 
+                elif user_Choice == 2:
+                    file_Manipulation.Delete_File(user_Input)
+                elif user_Choice == 3:
+                    file_Manipulation.Open_Editor(user_Input)
                 
                     
                 
@@ -92,10 +94,17 @@ def Menu():
             if user_Input == 0 :
                 return
             elif check_Func.is_valid_email(user_Input):
-                user_Input = ''
-                user_Input = input(print('\tEnter your Password ( 0 to return): '))
-                if user_Input == 0:
+                user_Input0 = ''
+                user_Input0 = input(print('\tEnter your Password ( 0 to return): '))
+                if user_Input0 == 0:
                     return
+                else:
+                
+                    file_Manipulation.Save_Account(str(user_Input),str(user_Input0),setting_Path)
+            else:
+                print('invalid Email!!!')
+                
+                    
         elif user_Input == 0:
             print('Exiting')
             break
