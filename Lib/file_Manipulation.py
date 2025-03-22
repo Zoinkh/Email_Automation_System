@@ -123,20 +123,22 @@ def Save_Credentials(account, password, filepath):
 
 
 
-def Create_Session(filename, message, emails):
+
+def Create_Session(filename, subject, message, emails):
     """
-    Creates a CSV file with message and email addresses.
+    Creates a CSV file with subject, message, and email addresses.
 
     Args:
         filename (str): The name of the CSV file to create.
+        subject (str): The subject of the message.
         message (str): The message to include in the CSV.
         emails (list): A list of email addresses.
     """
-    fieldnames = ['message']
+    fieldnames = ['subject', 'message']
     for i, email in enumerate(emails):
         fieldnames.append(f'email{i+1}')
 
-    data = {'message': message}
+    data = {'subject': subject, 'message': message}
     for i, email in enumerate(emails):
         data[f'email{i+1}'] = email
 
