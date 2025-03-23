@@ -1,6 +1,6 @@
 import sys
 import os
-
+import Lib
 # Get the absolute path to the 'other_file' directory
 lib = os.path.join(os.path.dirname(__file__), "Lib")
 
@@ -8,7 +8,6 @@ lib = os.path.join(os.path.dirname(__file__), "Lib")
 sys.path.append(lib)
 
 # Now you can import from other_file.py
-import Lib
 
 # Use the functions
-Lib.menu()
+Lib.menu.Menu()
