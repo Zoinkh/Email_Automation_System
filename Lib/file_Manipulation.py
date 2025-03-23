@@ -1,4 +1,3 @@
-import csv
 import os
 import json
 import platform
@@ -9,19 +8,25 @@ import subprocess
     
 
 
-def Print_CSV(filepath):
+def Print_Json(file_path):
+    """
+    Reads a JSON file and prints its contents in a formatted way.
+
+    Args:
+        file_path (str): The path to the JSON file.
+    """
     try:
-        with open(filepath, 'r', newline='', encoding='utf-8') as csvfile:
-            csv_reader = csv.reader(csvfile)
-            for row in csv_reader:
-                print(row) # or print(','.join(row)) to print comma separated.
+        with open(file_path, 'r') as f:
+            data = json.load(f)
+            print(json.dumps(data, indent=4))  # Use indent for pretty printing
 
     except FileNotFoundError:
-        print(f"Error: File not found at {filepath}")
+        print(f"Error: File not found at {file_path}")
+    except json.JSONDecodeError:
+        print(f"Error: Invalid JSON format in {file_path}")
     except Exception as e:
-        print(f"An error occurred: {e}")
-        
-        
+        print(f"An unexpected error occurred: {e}")
+
 
 def List_Files_In_Directory(directory_path):
     try:
@@ -38,16 +43,27 @@ def List_Files_In_Directory(directory_path):
     except Exception as e:
         print(f"An error occurred: {e}")
 
-
-
 def Get_Accounts(file_path):
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             data = json.load(file)
-        return data.get("accounts", [])  # Return accounts list if exists, else empty list
+        
+        if isinstance(data, list):  # Check if the data is a list
+            accounts = data  # If it is a list, use it directly as accounts
+        elif isinstance(data, dict):  # If it's a dictionary, try to access the accounts key
+            accounts = data.get("accounts", [])
+        else:
+            accounts = []  # If neither, return empty list
+        
+        if not accounts:  # If no accounts found or empty list
+            return 'not signed in'  # Return this message if no accounts are found
+        return accounts
+
     except (FileNotFoundError, json.JSONDecodeError) as e:
         print(f"Error: {e}")
-        return []
+        return 'not signed in'  # Return 'not signed in' if an error occurs
+
+
 
 
 def Print_Logs(file_path):
@@ -71,53 +87,85 @@ def Delete_File(fileName):
     else:
         print(f"File '{fileName}' not found.")
 
-
-
-
-
+import platform
+import subprocess
 
 def Open_Editor(fileName):
-    """Opens a CSV file with the appropriate editor based on the OS."""
-    if not fileName.endswith(".csv"):
-        print("Error: Only CSV files are supported.")
+    """Opens a JSON file with VS Code based on the OS."""
+    if not fileName.endswith(".json"):
+        print("Error: Only JSON files are supported.")
+        return
+
+    if not os.path.exists(fileName):
+        print(f"Error: File '{fileName}' not found.")
         return
 
     system_name = platform.system()
 
     try:
         if system_name == "Windows":
-            subprocess.run(["notepad", fileName], check=True)
+            subprocess.run(["code", fileName], check=True)
         elif system_name == "Linux":
-            subprocess.run(["vi", fileName], check=True)
+            subprocess.run(["code", fileName], check=True)
+        elif system_name == "Darwin": # macOS
+            subprocess.run(["code", fileName], check=True)
         else:
             print(f"Unsupported OS: {system_name}")
     except FileNotFoundError:
-        print("Error: Could not open file. Make sure the editor is installed.")
-
+        print("Error: Could not run VS Code. Make sure VS Code is installed and in your PATH.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error: VS Code returned an error. {e}")
 
 
 
 def Save_Credentials(account, password, filepath):
     """
-    Saves account and password credentials to a CSV file.
+    Saves account and password credentials to a JSON file.
 
     Args:
         account: The account name.
         password: The password.
-        filepath: The path to the CSV file (default: 'settings.csv').
+        filepath: The path to the JSON file (default: 'setting.json').
     """
-    fieldnames = ['account', 'password']
-
-    file_exists = os.path.isfile(filepath)
-
+    credentials = []
+    
+    # Get absolute directory path
+    filepath = os.path.abspath(filepath)
+    dir_path = os.path.dirname(filepath)
+    
+    # Ensure the directory exists
+    if not os.path.exists(dir_path):
+        try:
+            os.makedirs(dir_path, exist_ok=True)
+        except OSError as e:
+            print(f"Error creating directory {dir_path}: {e}")
+            return
+    
+    # Check if the file exists, if not create one with an empty list
+    if not os.path.isfile(filepath):
+        try:
+            with open(filepath, 'w') as jsonfile:
+                json.dump([], jsonfile)
+        except IOError as e:
+            print(f"Error creating {filepath}: {e}")
+            return
+    
+    # Load existing data
     try:
-        with open(filepath, 'a', newline='') as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
-            if not file_exists:
-                writer.writeheader()
-
-            writer.writerow({'account': account, 'password': password})
+        with open(filepath, 'r') as jsonfile:
+            credentials = json.load(jsonfile)
+    except (IOError, json.JSONDecodeError) as e:
+        print(f"Error reading {filepath}: {e}")
+        return
+    
+    # Append new credentials
+    credentials.append({'account': account, 'password': password})
+    
+    # Save updated credentials to JSON file
+    try:
+        with open(filepath, 'w') as jsonfile:
+            json.dump(credentials, jsonfile, indent=4)
+        print("Credentials saved successfully.")  # Print success message
     except IOError as e:
         print(f"Error writing to {filepath}: {e}")
 
@@ -126,28 +174,25 @@ def Save_Credentials(account, password, filepath):
 
 def Create_Session(filename, subject, message, emails):
     """
-    Creates a CSV file with subject, message, and email addresses.
+    Creates a JSON file with subject, message, and a list of email addresses.
 
     Args:
-        filename (str): The name of the CSV file to create.
+        filename (str): The name of the JSON file to create.
         subject (str): The subject of the message.
-        message (str): The message to include in the CSV.
+        message (str): The message to include in the JSON.
         emails (list): A list of email addresses.
     """
-    fieldnames = ['subject', 'message']
-    for i, email in enumerate(emails):
-        fieldnames.append(f'email{i+1}')
+    filepath = os.path.join(filename+".json")
 
-    data = {'subject': subject, 'message': message}
-    for i, email in enumerate(emails):
-        data[f'email{i+1}'] = email
+    data = {'subject': subject, 'message': message, 'emails': emails}
 
     try:
-        with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerow(data)
+        with open(filepath, 'w', encoding='utf-8') as jsonfile:
+            json.dump(data, jsonfile, indent=4)  # Use indent for better readability
 
-        print(f"CSV file '{filename}' created successfully.")
+        print(f"JSON file '{filename}' created successfully at '{filepath}'.")
     except Exception as e:
         print(f"An error occurred: {e}")
+
+
+

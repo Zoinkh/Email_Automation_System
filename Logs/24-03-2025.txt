@@ -1,0 +1,29 @@
+2025-03-24 00:00:19 - User-Choosed_1.-New-Session_Receiver-Email=oxavus@gmail.com
+2025-03-24 00:00:34 - User-Choosed_1.-New-Session_Receiver-Email=sunsarun@protonmail.com
+2025-03-24 00:01:17 - 2_Status;Logged-in-Email=[{'account': 'nu.examplemail@gmail.com', 'password': '123@Example'}]_Pending=
+2025-03-24 00:01:17 - User-Choosed=2.-Saved-Session
+2025-03-24 00:01:35 - User-Choosed=2.-Saved-Session_Open-Session=test1
+2025-03-24 00:02:40 - 2_Status;Logged-in-Email=[{'account': 'nu.examplemail@gmail.com', 'password': '123@Example'}]_Pending=
+2025-03-24 00:02:40 - User-Choosed=2.-Saved-Session
+2025-03-24 00:02:44 - User-Choosed=2.-Saved-Session_Open-Session=test1
+2025-03-24 00:06:30 - 2_Status;Logged-in-Email=[{'account': 'nu.examplemail@gmail.com', 'password': '123@Example'}]_Pending=
+2025-03-24 00:06:30 - User-Choosed=2.-Saved-Session
+2025-03-24 00:06:34 - User-Choosed=2.-Saved-Session_Open-Session=test1
+2025-03-24 00:08:57 - 2_Status;Logged-in-Email=[{'account': 'nu.examplemail@gmail.com', 'password': '123@Example'}]_Pending=
+2025-03-24 00:08:57 - User-Choosed=2.-Saved-Session
+2025-03-24 00:09:02 - User-Choosed=2.-Saved-Session_Open-Session=test1
+2025-03-24 00:11:12 - 2_Status;Logged-in-Email=[{'account': 'nu.examplemail@gmail.com', 'password': '123@Example'}]_Pending=
+2025-03-24 00:11:12 - User-Choosed=2.-Saved-Session
+2025-03-24 00:11:16 - User-Choosed=2.-Saved-Session_Open-Session=test1
+2025-03-24 00:12:08 - 2_Status;Logged-in-Email=[{'account': 'nu.examplemail@gmail.com', 'password': '123@Example'}]_Pending=
+2025-03-24 00:12:08 - User-Choosed=2.-Saved-Session
+2025-03-24 00:12:11 - User-Choosed=2.-Saved-Session_Open-Session=test1
+2025-03-24 00:13:11 - 2_Status;Logged-in-Email=[{'account': 'nu.examplemail@gmail.com', 'password': '123@Example'}]_Pending=
+2025-03-24 00:13:11 - User-Choosed=2.-Saved-Session
+2025-03-24 00:13:16 - User-Choosed=2.-Saved-Session_Open-Session=test1
+2025-03-24 00:14:15 - 2_Status;Logged-in-Email=[{'account': 'nu.examplemail@gmail.com', 'password': '123@Example'}]_Pending=
+2025-03-24 00:14:15 - User-Choosed=2.-Saved-Session
+2025-03-24 00:14:19 - User-Choosed=2.-Saved-Session_Open-Session=test1
+2025-03-24 00:15:41 - 2_Status;Logged-in-Email=[{'account': 'nu.examplemail@gmail.com', 'password': '123@Example'}]_Pending=
+2025-03-24 00:15:41 - User-Choosed=2.-Saved-Session
+2025-03-24 00:15:46 - User-Choosed=2.-Saved-Session_Open-Session=test1

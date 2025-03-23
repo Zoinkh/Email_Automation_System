@@ -34,13 +34,15 @@ def Send(sender_email, sender_password, receiver_email, subject, body):
     except Exception as e:
         print(f"Error sending email to {receiver_email}: {e}")
 
-def send_emails_from_json_csv(setting, session):
+
+
+def Send_Email_Saved_Session(setting, session):
     """
-    Reads sender credentials from a JSON file and email content from a CSV file, then sends emails.
+    Reads sender credentials from a JSON file and email content from a JSON file, then sends emails.
 
     Args:
         setting (str): Path to the JSON file containing sender email and password.
-        session (str): Path to the CSV file containing email subjects, bodies, and recipient emails.
+        session (str): Path to the JSON file containing email subjects, bodies, and a list of recipient emails.
     """
     try:
         with open(setting, 'r', encoding='utf-8') as file1:
@@ -52,32 +54,27 @@ def send_emails_from_json_csv(setting, session):
                 print(f"Invalid sender credentials in {setting}.")
                 return
 
-        import csv
-        with open(session, 'r', newline='', encoding='utf-8') as file2:
-            reader2 = csv.DictReader(file2)
+        with open(session, 'r', encoding='utf-8') as file2:
+            session_data = json.load(file2)
             emails = []
-            for row2 in reader2:
-                subject = row2.get('subject')
-                body = row2.get('body')
-                i = 0
-                while True:
-                    email_key = f'email{i}'
-                    receiver_email = row2.get(email_key)
-                    if receiver_email:
-                        emails.append((receiver_email, subject, body))
-                        i += 1
+            for row in session_data:
+                subject = row.get('subject')
+                body = row.get('body')
+                recipients = row.get('emails', [])  # Get the list of emails, default to [] if not present.
+
+                if not isinstance(recipients, list):
+                    print(f"Emails must be a list in session data: {row}")
+                    continue # Skip to the next row
+
+                for receiver_email in recipients:
+                    if sender_email and sender_password and receiver_email and subject and body:
+                        Send(sender_email, sender_password, receiver_email, subject, body)
                     else:
-                        break
-            for receiver_email, subject, body in emails:
-                if sender_email and sender_password and receiver_email and subject and body :
-                    Send(sender_email, sender_password, receiver_email, subject, body)
-                else:
-                    print("One or more email data is missing")
+                        print("One or more email data is missing")
 
     except FileNotFoundError:
         print("One or both files not found.")
-    except json.JSONDecodeError:
-        print(f"Invalid JSON format in {setting}.")
+    except json.JSONDecodeError as e:
+        print(f"Invalid JSON format: {e}")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
-

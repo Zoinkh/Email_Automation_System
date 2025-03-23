@@ -1,10 +1,16 @@
 import re
 import json
+import os
 
 
-def Check_Account(json_string):
+def Check_Account(file_path):
+    if not os.path.exists(file_path):
+        return False  # File does not exist
+    
     try:
-        data = json.loads(json_string)
+        with open(file_path, "r") as file:
+            data = json.load(file)
+        
         if "account" in data and data["account"] is not None:
             return True
         else:
@@ -12,9 +18,10 @@ def Check_Account(json_string):
     except json.JSONDecodeError:
         # Handle invalid JSON
         return False
-    except TypeError:
-        #Handle if the input is not a string.
+    except (TypeError, IOError):
+        # Handle if the input is not a valid file or cannot be read
         return False
+
     
     
     
