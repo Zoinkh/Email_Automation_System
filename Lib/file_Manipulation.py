@@ -9,12 +9,6 @@ import subprocess
 
 
 def Print_Json(file_path):
-    """
-    Reads a JSON file and prints its contents in a formatted way.
-
-    Args:
-        file_path (str): The path to the JSON file.
-    """
     try:
         with open(file_path, 'r') as f:
             data = json.load(f)
@@ -44,15 +38,6 @@ def List_Files_In_Directory(directory_path):
         print(f"An error occurred: {e}")
 
 def Get_Accounts(file_path):
-    """
-    Extracts the 'account' value from a JSON file.
-
-    Args:
-        file_path (str): The path to the JSON file.
-
-    Returns:
-        str: The value of the 'account' key, or None if not found or an error occurs.
-    """
     try:
         with open(file_path, 'r') as f:
             data = json.load(f)
@@ -72,7 +57,6 @@ def Get_Accounts(file_path):
 
 
 def Print_Logs(file_path):
-    """Prints the contents of a .txt file given its path."""
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             print(file.read())
@@ -85,7 +69,6 @@ def Print_Logs(file_path):
 
 
 def Delete_File(fileName):
-    """Deletes the specified file if it exists."""
     if os.path.exists(fileName):
         os.remove(fileName)
         print(f"File '{fileName}' has been deleted.")
@@ -94,7 +77,6 @@ def Delete_File(fileName):
 
 
 def Open_Editor(fileName):
-    """Opens a JSON file with VS Code based on the OS."""
     if not fileName.endswith(".json"):
         print("Error: Only JSON files are supported.")
         return
@@ -122,14 +104,6 @@ def Open_Editor(fileName):
 
 
 def Save_Credentials(account, password, filepath):
-    """
-    Saves account and password credentials to a JSON file.
-
-    Args:
-        account: The account name.
-        password: The password.
-        filepath: The path to the JSON file (default: 'setting.json').
-    """
     credentials = []
     
     # Get absolute directory path
@@ -176,15 +150,6 @@ def Save_Credentials(account, password, filepath):
 
 
 def Create_Session(filename, subject, body, emails):
-    """
-    Creates a JSON file with subject, body, and a list of email addresses.
-
-    Args:
-        filename (str): The name of the JSON file to create (without .json extension).
-        subject (str): The subject of the body.
-        body (str): The body to include in the JSON.
-        emails (list): A list of email addresses.
-    """
     filepath = filename + ".json" # Simplified path creation
 
     # Create the structure as a list of dictionaries, because the send function expects that.

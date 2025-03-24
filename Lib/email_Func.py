@@ -5,17 +5,6 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 def Send(sender_email, sender_password, receiver_email, subject, body):
-    """
-    Sends an email using Gmail's SMTP server.
-
-    Args:
-        sender_email (str): The sender's Gmail address.
-        sender_password (str): The sender's Gmail password or app password.
-        receiver_email (str): The recipient's email address.
-        subject (str): The email subject.
-        body (str): The email body (plain text )
-    """
-
     message = MIMEMultipart("alternative")
     message["Subject"] = subject
     message["From"] = sender_email
@@ -37,13 +26,6 @@ def Send(sender_email, sender_password, receiver_email, subject, body):
         return False  # Indicate failure
 
 def Send_Email_Saved_Session(setting, session):
-    """
-    Reads sender credentials from a JSON file and email content from a JSON file, then sends emails.
-
-    Args:
-        setting (str): Path to the JSON file containing sender email and password.
-        session (str): Path to the JSON file containing email subjects, bodies, and a list of recipient emails.
-    """
     try:
         with open(setting, 'r', encoding='utf-8') as file1:
             sender_data = json.load(file1)
