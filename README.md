@@ -8,14 +8,15 @@ note:
     |schedule/timer 
     preset Email subject.json
     after create sesstion promte send/exit
+    add log function to all event
 
 bugs
  x   save sing in email is not working // not save to directory
  x   Create session donesn't save properly
  x    convert to using json
-    send email is not running
+ x   send email is not running
     
         
 QT
-    Send Email
+ x   Send Email
 

@@ -44,24 +44,29 @@ def List_Files_In_Directory(directory_path):
         print(f"An error occurred: {e}")
 
 def Get_Accounts(file_path):
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            data = json.load(file)
-        
-        if isinstance(data, list):  # Check if the data is a list
-            accounts = data  # If it is a list, use it directly as accounts
-        elif isinstance(data, dict):  # If it's a dictionary, try to access the accounts key
-            accounts = data.get("accounts", [])
-        else:
-            accounts = []  # If neither, return empty list
-        
-        if not accounts:  # If no accounts found or empty list
-            return 'not signed in'  # Return this body if no accounts are found
-        return accounts
+    """
+    Extracts the 'account' value from a JSON file.
 
-    except (FileNotFoundError, json.JSONDecodeError) as e:
-        print(f"Error: {e}")
-        return 'not signed in'  # Return 'not signed in' if an error occurs
+    Args:
+        file_path (str): The path to the JSON file.
+
+    Returns:
+        str: The value of the 'account' key, or None if not found or an error occurs.
+    """
+    try:
+        with open(file_path, 'r') as f:
+            data = json.load(f)
+            if isinstance(data, list) and len(data) > 0 and isinstance(data[0], dict) and "account" in data[0]:
+                return data[0]["account"]
+            else:
+                return None  # Return None if the JSON structure is unexpected
+    except FileNotFoundError:
+        return None  # Return None if the file is not found
+    except json.JSONDecodeError:
+        return None # Return None if the file is not valid Json.
+    except Exception as e:
+        print(f"An error occurred: {e}") # Print any other exception.
+        return None
 
 
 
