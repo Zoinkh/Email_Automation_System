@@ -4,7 +4,7 @@ import platform
 import subprocess
  # probaly need add func to add csv file
 #def new_Session():
-    #take name email and message and save to .csv file
+    #take name email and body and save to .csv file
     
 
 
@@ -56,7 +56,7 @@ def Get_Accounts(file_path):
             accounts = []  # If neither, return empty list
         
         if not accounts:  # If no accounts found or empty list
-            return 'not signed in'  # Return this message if no accounts are found
+            return 'not signed in'  # Return this body if no accounts are found
         return accounts
 
     except (FileNotFoundError, json.JSONDecodeError) as e:
@@ -87,8 +87,6 @@ def Delete_File(fileName):
     else:
         print(f"File '{fileName}' not found.")
 
-import platform
-import subprocess
 
 def Open_Editor(fileName):
     """Opens a JSON file with VS Code based on the OS."""
@@ -165,34 +163,40 @@ def Save_Credentials(account, password, filepath):
     try:
         with open(filepath, 'w') as jsonfile:
             json.dump(credentials, jsonfile, indent=4)
-        print("Credentials saved successfully.")  # Print success message
+        print("Credentials saved successfully.")  # Print success body
     except IOError as e:
         print(f"Error writing to {filepath}: {e}")
 
 
 
 
-def Create_Session(filename, subject, message, emails):
+def Create_Session(filename, subject, body, emails):
     """
-    Creates a JSON file with subject, message, and a list of email addresses.
+    Creates a JSON file with subject, body, and a list of email addresses.
 
     Args:
-        filename (str): The name of the JSON file to create.
-        subject (str): The subject of the message.
-        message (str): The message to include in the JSON.
+        filename (str): The name of the JSON file to create (without .json extension).
+        subject (str): The subject of the body.
+        body (str): The body to include in the JSON.
         emails (list): A list of email addresses.
     """
-    filepath = os.path.join(filename+".json")
+    filepath = filename + ".json" # Simplified path creation
 
-    data = {'subject': subject, 'message': message, 'emails': emails}
+    # Create the structure as a list of dictionaries, because the send function expects that.
+    data = [{
+        'subject': subject,
+        'body': body,
+        'emails': emails
+    }]
 
     try:
         with open(filepath, 'w', encoding='utf-8') as jsonfile:
             json.dump(data, jsonfile, indent=4)  # Use indent for better readability
 
-        print(f"JSON file '{filename}' created successfully at '{filepath}'.")
+        print(f"JSON file '{filename}.json' created successfully.")
     except Exception as e:
         print(f"An error occurred: {e}")
+
 
 
 

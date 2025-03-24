@@ -78,7 +78,7 @@ def Menu():
                 #promte to for set time and and edit
                 user_Choice = ''
                 user_Choice = input('\tEnter Choice : ')
-                if user_Choice == 1:
+                if user_Choice == '1':
                     email_Func.Send_Email_Saved_Session(setting_Path,saved_Session_Path + user_Input + '.json')
                 elif user_Choice == '2':
                     file_Manipulation.Delete_File(saved_Session_Path+user_Input+'.json')
