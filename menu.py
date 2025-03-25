@@ -43,19 +43,22 @@ def Menu(): # Define the main function 'Menu'.
             session_Name = '' # Initialize session name variable.
             session_Name = input('\tEnter New Session Name ( 0 to Exit): ') # Get the new session name.
             logs.Logs(f'User-Choosed_1.-New-Session_New-Session-Name={session_Name}') # Log the session name.
-            if user_Input == '0': # If user enters '0' to exit.
+            if session_Name == '0': # If user enters '0' to exit.
                 logs.Logs(f'User-Choosed_1.-New-Session_New-Session-Name={session_Name}_Back-to-Menu') # Log the exit.
                 Menu() # Return to the main menu.
+                break
             subject_email = '' # Initialize subject email variable.
             subject_email = input('\tEnter Subject ( 0 to Exit): ') # Get the email subject.
-            if user_Input == '0': # If user enters '0' to exit.
+            if subject_email == '0': # If user enters '0' to exit.
                 logs.Logs(f'User-Choosed_1.-New-Session_New-Session-Name={session_Name}_Subject={subject_email}') # Log the exit.
                 Menu() # Return to the main menu.
+                break
             body_email = '' # Initialize email body variable
             body_email = input('\tEnter Messages ( 0 to Exit): ') # Get the email body.
-            if user_Input == '0': # If user enters '0' to exit.
+            if body_email == '0': # If user enters '0' to exit.
                 logs.Logs(f'User-Choosed_1.-New-Session_New-Session-Name={session_Name}_Body={body_email}') # Log the exit
                 Menu() # Return to the main menu.
+                break
             email_Input = [] # Initialize the list of recipient emails.
             while True: # Start a loop to get recipient emails.
                 user_Input = input('\tEnter Receiver Email (\'save\' to save): ') # Get an email address.
@@ -67,23 +70,31 @@ def Menu(): # Define the main function 'Menu'.
                     logs.Logs(f'Saved Session_Path:{saved_Session_Path}_Name:{session_Name}_Subject-Email:{subject_email}_Body-Email:{body_email},Reciever:{email_Input}') # Log the saved session.
                     user_Input = '' # Clear user input.
                     user_Input = input('\t1. Send \n\t0. Back to menu\n\tEnter Choice : ') # Ask user to send or go back.
-                    if user_Input == '1': # If user chooses '1' to send.
-                        email_Func.Send_Email_Saved_Session(setting_Path,saved_Session_Path + session_Name + '.json') # Send the email.
-                        logs.Logs(f'Created-Session_Prompt:1.-Send-User:_Name:{session_Name}_Subject-Email:{subject_email}_Body-Email:{body_email},Reciever:{email_Input}') # Log the sending.
-                    elif user_Input == '2':
-                            if user_Input == '0':
-                                Menu()
-                                logs.Logs(f'Created-Session_Prompt:Exite-back-to-menu')
-                            else :
-                                print('invalid input!')   
-                    elif user_Input =='0': #if user chooses 0
-                        Menu()
-                    else :
-                        print('invalid input!') #error message
-                        logs.Logs(f'Created-Session_Prompt:Invalid-Input:{user_Input}') #log error
+                    while True:
+                        if user_Input == '1': # If user chooses '1' to send.
+                            email_Func.Send_Email_Saved_Session(setting_Path,saved_Session_Path + session_Name + '.json') # Send the email.
+                            logs.Logs(f'Created-Session_Prompt:1.-Send-User:_Name:{session_Name}_Subject-Email:{subject_email}_Body-Email:{body_email},Reciever:{email_Input}') # Log the sending.
+                            Menu()
+                            break
+                        elif user_Input == '2':
+                                if user_Input == '0':
+                                    Menu()
+                                    logs.Logs(f'Created-Session_Prompt:Exite-back-to-menu')
+                                    break
+                                else :
+                                    print('invalid input!')   
+                        elif user_Input =='0': #if user chooses 0
+                            Menu()
+                            break
+                        else :
+                            print('invalid input!') #error message
+                            logs.Logs(f'Created-Session_Prompt:Invalid-Input:{user_Input}') #log error
                 if check_Func.is_valid_email(user_Input): # Check if the email is valid.
                     logs.Logs(f'User-Choosed_1.-New-Session_Receiver-Email={user_Input}') # Log the valid email.
                     email_Input.append(user_Input) # Add the email to the list.
+                elif user_Input == 'save':
+                            Menu()
+                            break
                 else: # If the email is invalid.
                     print('invalid Email') # Print an error message.
                     logs.Logs(f'User-Choosed_1.-New-Session_Receiver-Email_Invalid-input:{user_Input}') # Log the invalid email.
@@ -105,20 +116,29 @@ def Menu(): # Define the main function 'Menu'.
                       \t\t\t\t\t0. Exite back to Menu''')   # check os for which to open
                 #print out saved session
                 #promte to for set time and and edit
-                user_Choice = ''
-                user_Choice = input('\t\t\t\t\tEnter Choice : ')
-                if user_Choice == '1':
-                    email_Func.Send_Email_Saved_Session(setting_Path,saved_Session_Path + user_Input + '.json')
-                    Menu()
-                elif user_Choice == '2':
-                    file_Manipulation.Delete_File(saved_Session_Path+user_Input+'.json')
-                    logs.Logs(f'User-Choosed=2.-Saved-Session_Open-Session={user_Input}_Delete-session')
-                elif user_Choice == '3':
-                    file_Manipulation.Open_Editor(saved_Session_Path+user_Input+'.json')
-                    logs.Logs(f'User-Choosed=2.-Saved-Session_Open-Session={user_Input}_Open-file-editor')
-                else:
-                    print('\t\t\t\t\t invalid input')
-                    logs.Logs(f'User-Choosed=2.-Saved-Session_Open-Session={user_Input}_Invalid-Input:{user_Choice}')
+                while True:
+                    user_Choice = ''
+                    user_Choice = input('\t\t\t\t\tEnter Choice : ')
+                    if user_Choice == '1':
+                        email_Func.Send_Email_Saved_Session(setting_Path,saved_Session_Path + user_Input + '.json')
+                        Menu()
+                        break
+                    elif user_Choice == '2':
+                        file_Manipulation.Delete_File(saved_Session_Path+user_Input+'.json')
+                        logs.Logs(f'User-Choosed=2.-Saved-Session_Open-Session={user_Input}_Delete-session')
+                        Menu()
+                        break
+                    elif user_Choice == '3':
+                        file_Manipulation.Open_Editor(saved_Session_Path+user_Input+'.json')
+                        logs.Logs(f'User-Choosed=2.-Saved-Session_Open-Session={user_Input}_Open-file-editor')
+                        Menu()
+                        break
+                    elif user_Choice =='0':
+                        Menu()
+                        return
+                    else:
+                        print('\t\t\t\t\t invalid input')
+                        logs.Logs(f'User-Choosed=2.-Saved-Session_Open-Session={user_Input}_Invalid-Input:{user_Choice}')
                 
         elif user_Input == '3': # If user chooses '3' (Logs).
             file_Manipulation.List_Files_In_Directory(logs_Path) #list all the logs
@@ -133,22 +153,23 @@ def Menu(): # Define the main function 'Menu'.
                     file_Manipulation.Print_Logs(logs_Path+'/'+user_Input+'.txt')
                     logs.Logs(f'User-choice:3_3.-Log_Log-File-Name:{logs_Path+'/'+user_Input+'.txt'}_Print-Log-out')
         elif user_Input == '4': # If user chooses '4' (Email Account).
-            user_Input = ''
-            user_Input = input('\t\t\t\t\tEnter your Email ( 0 to Exit): ')
-            if user_Input == '0' :
-                logs.Logs(f'User-choice:4_4.-Sing-in-Email_Email:{user_Input}')
-                Menu()
-            elif check_Func.is_valid_email(user_Input):
-                user_Input0 = ''
-                user_Input0 = input('\t\t\t\t\tEnter your Password ( 0 to Exit): ')
-                if user_Input0 == '0':
-                    logs.Logs(f'User-choice:4_4.-Sing-in-Email:0_Exit-back-to-meu')
+            while True:
+                user_Input = ''
+                user_Input = input('\t\t\t\t\tEnter your Email ( 0 to Exit): ')
+                if user_Input == '0' :
+                    logs.Logs(f'User-choice:4_4.-Sing-in-Email_Email:{user_Input}')
                     Menu()
-                file_Manipulation.Save_Credentials(user_Input,user_Input0,setting_Path)
-                Menu()
-            else:
-                logs.Logs(f'User-choice:4_4.-Sing-in-Email_Email-Invalid-input:{user_Input}')
-                print('invalid Email!!!')
+                elif check_Func.is_valid_email(user_Input):
+                    user_Input0 = ''
+                    user_Input0 = input('\t\t\t\t\tEnter your Password ( 0 to Exit): ')
+                    if user_Input0 == '0':
+                        logs.Logs(f'User-choice:4_4.-Sing-in-Email:0_Exit-back-to-meu')
+                        Menu()
+                    file_Manipulation.Save_Credentials(user_Input,user_Input0,setting_Path)
+                    Menu()
+                else:
+                    logs.Logs(f'User-choice:4_4.-Sing-in-Email_Email-Invalid-input:{user_Input}')
+                    print('invalid Email!!!')
                 
         elif user_Input == '0': # If user chooses '0' (Exit).
             print('Exiting') # Print exit message.
