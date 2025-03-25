@@ -1,15 +1,17 @@
+import os
 import sys
-sys.path.append('Lib')
-print("sys.path:",sys.path)
+lib_path = os.path.abspath('Lib')
+sys.path.append(lib_path)
 import logs
 import file_Manipulation
 import email_Func
 import check_Func
+
 def Menu():
     setting_Path = "Data/setting.json"
-    logs_Path = "../Logs"
+    logs_Path = "Logs"
     saved_Session_Path = "Data/Saved/"
-        
+ 
     while True:
         if check_Func.file_exists(setting_Path):
             currentAccount = file_Manipulation.Get_Accounts(setting_Path)
@@ -111,13 +113,13 @@ def Menu():
             while True:
                 user_Input = ''
                 user_Input = input('\tEnter log Date(dd-mm-yy) to read ( 0 to Exit): ')
-                logs.Logs(f'User-choice:3_3.-Log_Log-File-Name:{logs_Path+user_Input+'.txt'}')
+                logs.Logs(f'User-choice:3_3.-Log_Log-File-Name:{user_Input}')
                 if user_Input == '0':
                     logs.Logs(f'User-choice:3_3.-Log_User_choice:0_Exit-back-to-meu')
                     Menu()
                 else :
-                    file_Manipulation.Print_Logs(logs_Path+user_Input+'.txt')
-                    logs.Logs(f'User-choice:3_3.-Log_Log-File-Name:{user_Input}_Print-Log-out')
+                    file_Manipulation.Print_Logs(logs_Path+'/'+user_Input+'.txt')
+                    logs.Logs(f'User-choice:3_3.-Log_Log-File-Name:{logs_Path+'/'+user_Input+'.txt'}_Print-Log-out')
         elif user_Input == '4':
             user_Input = ''
             user_Input = input('\tEnter your Email ( 0 to Exit): ')
@@ -139,7 +141,7 @@ def Menu():
         elif user_Input == '0':
             print('Exiting')
             logs.Logs('exit-program')
-            break
+            exit()
         else :
             print('invalid input!')
             logs.Logs(f'Menu_Invalid-Input:{user_Input}')
