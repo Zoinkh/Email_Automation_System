@@ -1,2 +1,2 @@
 import menu
-menu.Menu()
+menu.Menu() #import menu module and Call Menu()
