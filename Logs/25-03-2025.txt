@@ -1,0 +1,10 @@
+2025-03-25 13:00:44 - 1_Status;Logged-in-Email=nu.examplemail@gmail.com
+2025-03-25 13:00:44 - User-Choosed=1.-New-Session
+2025-03-25 13:01:00 - User-Choosed_1.-New-Session_New-Session-Name=Test1
+2025-03-25 13:01:48 - User-Choosed_1.-New-Session_Receiver-Email=liepsokkeang@gmail.com
+2025-03-25 13:01:56 - Saved Session_Path:Data/Saved/_Name:Test1_Subject-Email:Hello_Body-Email:Hello world,Reciever:['liepsokkeang@gmail.com']
+2025-03-25 13:02:04 - Created-Session_Prompt:1.-Send-User:_Name:Test1_Subject-Email:Hello_Body-Email:Hello world,Reciever:['liepsokkeang@gmail.com']
+2025-03-25 13:02:04 - User-Choosed_1.-New-Session_Receiver-Email_Invalid-input:1
+2025-03-25 13:10:45 - 3_Status;Logged-in-Email=nu.examplemail@gmail.com
+2025-03-25 13:10:56 - User-choice:3_3.-Log_Log-File-Name:25-03-2025
+2025-03-25 13:10:56 - User-choice:3_3.-Log_Log-File-Name:Logs/25-03-2025.txt_Print-Log-out

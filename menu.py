@@ -17,14 +17,26 @@ def Menu(): # Define the main function 'Menu'.
             currentAccount = file_Manipulation.Get_Accounts(setting_Path) # Get the current account from the settings file.
             print(f'\tStatus :\nLogged in Email :{currentAccount}') # Print the logged-in email.
             
-        print('''\t********** Menu **********\n # Print the main menu options.
-              \t1. New Session\n
-              \t2. Saved Session\n
-              \t3. Logs\n
-              \t4. Email Account\n
-              \t0. Exit\n''')
+            
+        print('''
+ /$$$$$$$$                         /$$ /$$        /$$$$$$              /$$                                         /$$     /$$                          
+| $$_____/                        |__/| $$       /$$__  $$            | $$                                        | $$    |__/                          
+| $$       /$$$$$$/$$$$   /$$$$$$  /$$| $$      | $$  \ $$ /$$   /$$ /$$$$$$    /$$$$$$  /$$$$$$/$$$$   /$$$$$$  /$$$$$$   /$$  /$$$$$$  /$$$$$$$       
+| $$$$$   | $$_  $$_  $$ |____  $$| $$| $$      | $$$$$$$$| $$  | $$|_  $$_/   /$$__  $$| $$_  $$_  $$ |____  $$|_  $$_/  | $$ /$$__  $$| $$__  $$      
+| $$__/   | $$ \ $$ \ $$  /$$$$$$$| $$| $$      | $$__  $$| $$  | $$  | $$    | $$  \ $$| $$ \ $$ \ $$  /$$$$$$$  | $$    | $$| $$  \ $$| $$  \ $$      
+| $$      | $$ | $$ | $$ /$$__  $$| $$| $$      | $$  | $$| $$  | $$  | $$ /$$| $$  | $$| $$ | $$ | $$ /$$__  $$  | $$ /$$| $$| $$  | $$| $$  | $$      
+| $$$$$$$$| $$ | $$ | $$|  $$$$$$$| $$| $$      | $$  | $$|  $$$$$$/  |  $$$$/|  $$$$$$/| $$ | $$ | $$|  $$$$$$$  |  $$$$/| $$|  $$$$$$/| $$  | $$      
+|________/|__/ |__/ |__/ \_______/|__/|__/      |__/  |__/ \______/    \___/   \______/ |__/ |__/ |__/ \_______/   \___/  |__/ \______/ |__/  |__/      
+                                                                                                                                                        
+                                                                                                                                                                                                                                                                                        
+              \t\t\t\t\t********** Menu **********\n   
+              \t\t\t\t\t1. New Session\n
+              \t\t\t\t\t2. Saved Session\n
+              \t\t\t\t\t3. Logs\n
+              \t\t\t\t\t4. Email Account\n
+              \t\t\t\t\t0. Exit\n''')   # Print the main menu options.
         user_Input = '' # Initialize user input variable.
-        user_Input = input('\tEnter Choice (1,2,3,4,0) : ') # Get user's menu choice.
+        user_Input = input('\t\t\t\t\t Enter Choice (1,2,3,4,0) : ') # Get user's menu choice.
         logs.Logs(f'{user_Input}_Status;Logged-in-Email={currentAccount}') # Log the user's menu choice.
         if user_Input == '1': # If user chooses '1' (New Session).
             logs.Logs(f'User-Choosed=1.-New-Session') # Log the start of a new session.
@@ -86,15 +98,15 @@ def Menu(): # Define the main function 'Menu'.
                 Menu() # Return to the main menu.
             else: # If a session name is entered.
                 file_Manipulation.Print_Json(saved_Session_Path+user_Input+'.json') # Print the session details.
-                print('''\t********** Options ***********\n
-                      \t1. Send Session
-                      \t2. Delete Session
-                      \t3. Edit Session
-                      \t0. Exite back to Menu''')   # check os for which to open
+                print('''\t\t\t\t\t********** Options ***********\n
+                      \t\t\t\t\t1. Send Session
+                      \t\t\t\t\t2. Delete Session
+                      \t\t\t\t\t3. Edit Session
+                      \t\t\t\t\t0. Exite back to Menu''')   # check os for which to open
                 #print out saved session
                 #promte to for set time and and edit
                 user_Choice = ''
-                user_Choice = input('\tEnter Choice : ')
+                user_Choice = input('\t\t\t\t\tEnter Choice : ')
                 if user_Choice == '1':
                     email_Func.Send_Email_Saved_Session(setting_Path,saved_Session_Path + user_Input + '.json')
                     Menu()
@@ -105,14 +117,14 @@ def Menu(): # Define the main function 'Menu'.
                     file_Manipulation.Open_Editor(saved_Session_Path+user_Input+'.json')
                     logs.Logs(f'User-Choosed=2.-Saved-Session_Open-Session={user_Input}_Open-file-editor')
                 else:
-                    print('invalid input')
+                    print('\t\t\t\t\t invalid input')
                     logs.Logs(f'User-Choosed=2.-Saved-Session_Open-Session={user_Input}_Invalid-Input:{user_Choice}')
                 
         elif user_Input == '3': # If user chooses '3' (Logs).
             file_Manipulation.List_Files_In_Directory(logs_Path) #list all the logs
             while True:
                 user_Input = ''
-                user_Input = input('\tEnter log Date(dd-mm-yy) to read ( 0 to Exit): ')
+                user_Input = input('\t\t\t\t\tEnter log Date(dd-mm-yy) to read ( 0 to Exit): ')
                 logs.Logs(f'User-choice:3_3.-Log_Log-File-Name:{user_Input}')
                 if user_Input == '0':
                     logs.Logs(f'User-choice:3_3.-Log_User_choice:0_Exit-back-to-meu')
@@ -122,13 +134,13 @@ def Menu(): # Define the main function 'Menu'.
                     logs.Logs(f'User-choice:3_3.-Log_Log-File-Name:{logs_Path+'/'+user_Input+'.txt'}_Print-Log-out')
         elif user_Input == '4': # If user chooses '4' (Email Account).
             user_Input = ''
-            user_Input = input('\tEnter your Email ( 0 to Exit): ')
+            user_Input = input('\t\t\t\t\tEnter your Email ( 0 to Exit): ')
             if user_Input == '0' :
                 logs.Logs(f'User-choice:4_4.-Sing-in-Email_Email:{user_Input}')
                 Menu()
             elif check_Func.is_valid_email(user_Input):
                 user_Input0 = ''
-                user_Input0 = input('\tEnter your Password ( 0 to Exit): ')
+                user_Input0 = input('\t\t\t\t\tEnter your Password ( 0 to Exit): ')
                 if user_Input0 == '0':
                     logs.Logs(f'User-choice:4_4.-Sing-in-Email:0_Exit-back-to-meu')
                     Menu()
